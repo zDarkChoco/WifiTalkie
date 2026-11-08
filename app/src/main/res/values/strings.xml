@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WifiTalkie</string>
+    <string name="tagline">LOCAL WI-FI HALF-DUPLEX WALKIE TALKIE</string>
+    <string name="ptt_hold_to_talk">HOLD TO TALK</string>
+    <string name="ptt_pre_beep">BEEP • READY...</string>
+    <string name="ptt_transmitting">TRANSMITTING</string>
+    <string name="ptt_channel_busy">CHANNEL BUSY</string>
+    <string name="ptt_wait_peer">WAIT FOR %1$s TO FINISH</string>
+    <string name="service_notification_title">WifiTalkie Active</string>
+    <string name="service_notification_text">Listening on Local Wi-Fi • Push-to-Talk Ready</string>
+</resources>

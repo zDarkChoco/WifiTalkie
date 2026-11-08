@@ -1,0 +1,12 @@
+# Gradle & Android Studio build outputs
+.gradle/
+build/
+app/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+
+# Keep compiled APK releases tracked in git as requested
+!WifiTalkie.apk
+!releases/*.apk

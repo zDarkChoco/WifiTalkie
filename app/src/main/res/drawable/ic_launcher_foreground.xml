@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Antenna -->
+    <path
+        android:fillColor="#5CE1E6"
+        android:pathData="M42,22h5v16h-5z" />
+    <path
+        android:fillColor="#6DD58C"
+        android:pathData="M44.5,20m-3.5,0a3.5,3.5 0,1 1,7 0a3.5,3.5 0,1 1,-7 0" />
+    <!-- Walkie Body Glass Rim -->
+    <path
+        android:fillColor="#26A8C7FA"
+        android:strokeColor="#88A8C7FA"
+        android:strokeWidth="2.2"
+        android:pathData="M36,36h36c4.4,0 8,3.6 8,8v34c0,4.4 -3.6,8 -8,8H36c-4.4,0 -8,-3.6 -8,-8V44c0,-4.4 3.6,-8 8,-8z" />
+    <!-- Speaker Grille Lines -->
+    <path
+        android:strokeColor="#EAF4FF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M40,47h28M43,53h22M40,59h28" />
+    <!-- PTT Center Glowing Button -->
+    <path
+        android:fillColor="#5CE1E6"
+        android:pathData="M54,72m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+    <!-- Wi-Fi Wave Arc Top Right -->
+    <path
+        android:strokeColor="#6DD58C"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M60,26c5,-4 12,-4 17,0M63,31c3,-2.5 7.5,-2.5 11,0" />
+</vector>
