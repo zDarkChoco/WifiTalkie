@@ -24,28 +24,54 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Signed APK & Run Protocol Verification Tests
-        run: ./build-apk.sh
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Upload Signed APK Workflow Artifact
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build Aligned & Debug-Signed APK via Gradle
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Copy Debug APK to Release Outputs & Verify 4-Byte Alignment
+        run: |
+          mkdir -p releases
+          cp -f app/build/outputs/apk/debug/app-debug.apk WifiTalkie.apk
+          cp -f app/build/outputs/apk/debug/app-debug.apk releases/WifiTalkie-v1.0.0.apk
+          cp -f app/build/outputs/apk/debug/app-debug.apk releases/WifiTalkie-debug.apk
+          ZIPALIGN=$(find "$ANDROID_HOME/build-tools" -name zipalign | sort -V | tail -n 1)
+          "$ZIPALIGN" -c -v 4 WifiTalkie.apk
+
+      - name: Upload Signed Debug APK Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WifiTalkie-apk
+          name: WifiTalkie-debug-apk
           path: |
+            app/build/outputs/apk/debug/app-debug.apk
             WifiTalkie.apk
             releases/WifiTalkie-v1.0.0.apk
+            releases/WifiTalkie-debug.apk
 
-      - name: Publish or Update v1.0.0 GitHub Release with Signed APK
+      - name: Publish or Update v1.0.0 GitHub Release with Aligned Debug APK
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG_NAME="v1.0.0"
           if gh release view "$TAG_NAME" >/dev/null 2>&1; then
-            gh release upload "$TAG_NAME" WifiTalkie.apk releases/WifiTalkie-v1.0.0.apk --clobber
+            gh release upload "$TAG_NAME" \
+              app/build/outputs/apk/debug/app-debug.apk \
+              WifiTalkie.apk \
+              releases/WifiTalkie-v1.0.0.apk \
+              releases/WifiTalkie-debug.apk \
+              --clobber
             gh release edit "$TAG_NAME" --draft=false
           else
-            gh release create "$TAG_NAME" WifiTalkie.apk releases/WifiTalkie-v1.0.0.apk \
+            gh release create "$TAG_NAME" \
+              app/build/outputs/apk/debug/app-debug.apk \
+              WifiTalkie.apk \
+              releases/WifiTalkie-v1.0.0.apk \
+              releases/WifiTalkie-debug.apk \
               --title "WifiTalkie v1.0.0 — Local Wi-Fi Walkie-Talkie (OLED Liquid Glass)" \
-              --notes "Download **WifiTalkie-v1.0.0.apk** below to install on Android 8.0+ (API 26–34)."
+              --notes "Download **WifiTalkie-v1.0.0.apk** (or **app-debug.apk**) below to install on Android 8.0–15+ (API 26–34)."
           fi

@@ -15,12 +15,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("debug")
-        }
-        debug {
-            applicationIdSuffix = ""
         }
     }
 
